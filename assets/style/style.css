@@ -1,0 +1,190 @@
+:root
+{
+    --c-blue1: #222684;
+    --c-lavender1: #6466A8;
+    --c-pink2: #F1DDD9;
+    --c-red2: #E6C2BF;
+    --c-purple3: #9266CC;
+    --c-violet3: #8E44AD;
+    --c-neutral: #080A45;
+}
+
+*
+{
+    margin: 0;
+    padding: 0;    
+}
+
+body
+{
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: repeat(4, auto);
+}
+
+header
+{   
+    grid-column: 1 / 13;
+    background-color: var(--c-blue1);        
+    & .NavBar
+    {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);                        
+        
+        & .LogoContainer
+        {                        
+            grid-column: 1 / 3;            
+        }   
+        & .SearchBarContainer
+        {            
+            padding: 0.9vw;
+            grid-column: 3 / 5;
+            & .SearchBar
+            {                          
+                position: relative;     
+                border-radius: 5px;
+                border-style: unset;                
+                outline: none;
+                height: 4vh;
+                width: 31vw;                                                
+            }
+        }
+        & .ShoppingCartContainer
+        {
+            grid-column: 12 / 13;
+            & .ShoppingCartIconContainer
+            {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100%;
+                & i {
+                    color: white;
+                    transition: 0.25s;
+
+                    &:hover
+                    {
+                        color: var(--c-neutral);                        
+                    }
+                }
+                /* & img 
+                {                    
+                    height: 5vh;
+                    width: 5vw;
+                } */
+            }
+            
+        }
+    }
+    
+    
+    
+}
+.FilterSection
+{
+    display: flex;
+    flex-direction: column;
+
+    background-color: rgba(220, 185, 144, 1);
+    grid-row: 2 / 5;
+    grid-column: 1 / 3;
+}
+.ItemSection
+{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, auto);
+    column-gap: 5vw;
+    row-gap: 5vh;
+    padding: 5vh;    
+
+    background-color: rgba(0, 0, 0, .1);
+    grid-row: 2 / 5;
+    grid-column: 3 / 13;
+}
+.ItemCard
+{
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    background-color: rgb(192, 192, 192);
+    height: 70vh;
+    width: 16vw;
+
+    transition: 0.25s;    
+    & .ImageContainer
+    {
+        display: flex;
+        flex-direction: column;                      
+        & img 
+        {            
+            height: 40vh;
+            width: auto; 
+            border-top-left-radius: 10px;   
+            border-top-right-radius: 10px;
+        }
+    }
+    & .ContentResultContainer
+    {
+        display: flex;
+        flex-direction: column;
+        background-color: var(--c-lavender1);
+        height: 30vh;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        & .NameContainer
+        {
+            width: 14vw;
+            height: 5vh;
+            padding: 20px;
+            text-overflow: ellipsis;
+            & h4
+            {
+                
+            }
+        }
+        
+        & .PriceContainer
+        {
+            padding-left: 20px;
+            padding-top: 10px;
+            & p 
+            {                
+                font-size: 1.5rem;
+            }            
+        }
+        & .ShoppingCartIconContainer
+        {
+            display: flex;
+            align-items: center;
+            justify-content: right;
+            padding: 20px;
+            grid-column: 10 / 13;            
+            & i 
+            {
+                color: white;
+                transition: 0.25s;
+
+                &:hover
+                {
+                    color: var(--c-neutral);                        
+                }
+            }
+        }
+    }
+    &:hover{
+        box-shadow: 0px 0px 5px rgb(90, 90, 90);
+        /* transform: scale(1.15); */
+    }
+}
+.PageToggle
+{
+    grid-column: 1 / 5;
+    height: 10vh;
+}
+footer
+{
+    background-color: black;
+    height: 20vh;
+    grid-column: 1 / 13;
+}
