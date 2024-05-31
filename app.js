@@ -59,24 +59,29 @@ function CreateCards(products)
         productNameContainer.appendChild(productName);
         contentResultContainer.appendChild(productNameContainer);
 
+        let priceAndCartContainer = document.createElement('section');
+        priceAndCartContainer.classList.add("PriceAndCartContainer");
+        
         let priceContainer = document.createElement('section');
         priceContainer.classList.add("PriceContainer");
         let price = document.createElement('p');
         price.innerHTML = "$" + product.price;
         priceContainer.appendChild(price);
-        contentResultContainer.appendChild(priceContainer);
+        priceAndCartContainer.appendChild(priceContainer);
 
-        let shoppingCartIconContainer = document.createElement('section');
-        shoppingCartIconContainer.classList.add("ShoppingCartIconContainer");
+        let shoppingCartButton = document.createElement('button');
+        shoppingCartButton.classList.add("ShoppingCartIconContainer");
+        shoppingCartButton.addEventListener('click', () => {
+            AddProduct(product.id);
+        })
         let icon = document.createElement('i');
         icon.classList.add("fa-solid");
         icon.classList.add("fa-cart-shopping");
-        icon.classList.add("fa-xl");
-        icon.addEventListener('click', () => {
-            AddProduct(product.id);            
-        });
-        shoppingCartIconContainer.appendChild(icon);
-        contentResultContainer.appendChild(shoppingCartIconContainer);
+        icon.classList.add("fa-xl");        
+        shoppingCartButton.appendChild(icon);
+        priceAndCartContainer.appendChild(shoppingCartButton);
+
+        contentResultContainer.appendChild(priceAndCartContainer);
 
         newCard.appendChild(contentResultContainer);
         ItemSection.append(newCard);

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shopping Cart</title>
-    <link rel="stylesheet" href="./assets/style/style.css">
+    <link rel="stylesheet" href="./assets/style/ShoppingCartPage.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
@@ -26,8 +26,47 @@
         </nav>
     </header>
     <main>
-        <section id="displayName"></section>
-        <button id="button" onclick="BuyShoppingCart()">Buy</button>
+        <section class="ProductListSection">
+            <section class="ProductContainer">
+                <section class="ContentContainer">
+                    <section class="ImageContainer">
+                        <img src="https://ardiaprod.vtexassets.com/arquivos/ids/267845-800-auto?v=638322470101800000&width=800&height=auto&aspect=true" alt="">
+                    </section>
+                    <section class="InformationContainer">
+                        <section class="ProductNameContainer">
+                            <h3>PRODUCTO</h3>
+                        </section>
+                        <section class="DeleteButtonContainer">
+                            <button>DELETE</button>
+                        </section>
+                        <section class="PurchaseSection">
+                            <button>ADD TO CART</button>
+                            <h3>MONEY</h3>
+                        </section>
+                    </section>
+                </section>
+            </section>
+        </section>
+        <section class="ResumeSection">
+            <section class="ResumeContainer">
+                <section class="ResumeContainerHeader">
+                    <h3>Resumen de Compra</h3>
+                </section>
+                <section class="PricesSection">
+                    <section class="IndividualProduct">
+                        <h3>Product Name</h3>
+                        <h3>1000</h3>
+                    </section>
+                    <section class="Total">
+                        <h3>Total</h3>
+                        <h3>Price</h3>
+                    </section>
+                </section>
+                <section class="ButtonContainer">
+                    <button>COMPRAR</button>
+                </section>
+            </section>
+        </section>
     </main>  
     <script src="shoppingCart.js"></script>  
 </body>

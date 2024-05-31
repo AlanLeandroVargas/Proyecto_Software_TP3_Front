@@ -3,6 +3,7 @@
     --c-blue1: rgba(0, 23, 153, 1);
     /* --c-blue1: #222684; */
     --c-yellow1: rgba(255, 181, 52, 1);
+    --c-yellow2: rgb(222, 158, 47);
     --c-white1: rgba(255, 254, 254, 1);
     --c-gray1: rgba(241, 241, 241, 1);
     --c-cian1: rgba(192, 197, 230, 1);
@@ -31,6 +32,7 @@ body
 
 header
 {   
+    height: 14vh;
     grid-column: 1 / 13;
     background-color: var(--c-blue1);        
     & .NavBar
@@ -80,12 +82,8 @@ header
                     width: 5vw;
                 } */
             }
-            
         }
     }
-    
-    
-    
 }
 .FilterSection
 {
@@ -115,9 +113,9 @@ header
     flex-direction: column;
     border-radius: 10px;
     /* background-color: rgb(192, 192, 192); */
-    height: 70vh;
+    height: 65vh;
     width: 16vw;
-    border: 0.25px outset var(--c-cian1);
+    border: 0.25px solid var(--c-cian1);
     overflow: hidden;
 
     transition: 0.25s;    
@@ -146,43 +144,56 @@ header
             width: 14vw;
             height: 5vh;
             padding: 20px;
-            text-overflow: ellipsis;
-            & h4
-            {
-                
-            }
+            text-overflow: ellipsis;            
         }
-        
-        & .PriceContainer
-        {
-            padding-left: 20px;
-            padding-top: 10px;
-            & p 
-            {                
-                font-size: 1.5rem;
-            }            
-        }
-        & .ShoppingCartIconContainer
+        & .PriceAndCartContainer
         {
             display: flex;
-            align-items: center;
-            justify-content: right;
-            padding: 20px;
-            
-            background-color: var(--c-yellow1);            
-            & i 
+            justify-content: space-between;
+            /* justify-content: space-around; */
+            & .PriceContainer
             {
-                color: white;
-                transition: 0.25s;
+                padding-left: 20px;
+                padding-top: 10px;
+                & p 
+                {                
+                    font-size: 1.5rem;
+                }            
+            }
+            & .ShoppingCartIconContainer
+            {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 2.5px;
+                margin-right: 15px;
+                border-radius: 50px;
+                width: 44px;
+                height: 44px;
+                background-color: var(--c-yellow1);  
+                border: none;
+                & i 
+                {
+                    color: white;
+                    transition: 0.25s;                    
+                }
                 &:hover
                 {
-                    color: var(--c-neutral);                        
+                    & i
+                    {
+                        color: var(--c-neutral);
+                    }
                 }
-            }
+                &:active
+                {
+                    background-color: var(--c-yellow2);
+                    box-shadow: 0px 0px 3px gray;
+                }
+            }            
         }
     }
     &:hover{
-        box-shadow: 0px 0px 5px rgb(90, 90, 90);
+        box-shadow: 0px 2px 5px var(--c-cian1);
         /* transform: scale(1.15); */
     }
 }
