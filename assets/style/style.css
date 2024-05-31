@@ -24,16 +24,16 @@
 
 body
 {
-    display: grid;
+    /* display: grid;
     grid-template-columns: repeat(12, 1fr);
-    grid-template-rows: repeat(4, auto);
+    grid-template-rows: repeat(4, auto); */
     background-color: var(--c-gray1);
 }
 
 header
 {   
     height: 14vh;
-    grid-column: 1 / 13;
+    /* grid-column: 1 / 13; */
     background-color: var(--c-blue1);        
     & .NavBar
     {
@@ -86,116 +86,128 @@ header
         }
     }
 }
-.FilterSection
-{
-    display: flex;
-    flex-direction: column;
 
-    /* background-color: rgba(220, 185, 144, 1); */
-    grid-row: 2 / 5;
-    grid-column: 1 / 3;
-}
-.ItemSection
+main
 {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(12, 1fr);
     grid-template-rows: repeat(4, auto);
-    column-gap: 5vw;
-    row-gap: 5vh;
-    padding: 5vh;    
-
-    background-color: var(--c-gray1);
-    grid-row: 2 / 5;
-    grid-column: 3 / 13;
-}
-.ItemCard
-{
-    display: flex;
-    flex-direction: column;
-    border-radius: 10px;
-    /* background-color: rgb(192, 192, 192); */
-    height: 65vh;
-    width: 16vw;
-    border: 0.25px solid var(--c-cian1);
-    overflow: hidden;
-
-    transition: 0.25s;    
-    & .ImageContainer
-    {
-        display: flex;
-        flex-direction: column;                      
-        & img 
-        {            
-            height: 40vh;
-            width: auto; 
-            border-top-left-radius: 10px;   
-            border-top-right-radius: 10px;
-        }
-    }
-    & .ContentResultContainer
+    & .FilterSection
     {
         display: flex;
         flex-direction: column;
-        background-color: var(--c-white1);
-        height: 30vh;
-        border-bottom-left-radius: 10px;
-        border-bottom-right-radius: 10px;
-        & .NameContainer
+            
+        grid-row: 2 / 5;
+        grid-column: 1 / 3;
+        & .FilterContainer
         {
-            width: 14vw;
-            height: 5vh;
-            padding: 20px;
-            text-overflow: ellipsis;            
-        }
-        & .PriceAndCartContainer
-        {
-            display: flex;
-            justify-content: space-between;
-            /* justify-content: space-around; */
-            & .PriceContainer
-            {
-                padding-left: 20px;
-                padding-top: 10px;
-                & p 
-                {                
-                    font-size: 1.5rem;
-                }            
-            }
-            & .ShoppingCartIconContainer
-            {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                padding: 2.5px;
-                margin-right: 15px;
-                border-radius: 50px;
-                width: 44px;
-                height: 44px;
-                background-color: var(--c-yellow1);  
-                border: none;
-                & i 
-                {
-                    color: white;
-                    transition: 0.25s;                    
-                }
-                &:hover
-                {
-                    & i
-                    {
-                        color: var(--c-neutral);
-                    }
-                }
-                &:active
-                {
-                    background-color: var(--c-yellow2);
-                    box-shadow: 0px 0px 3px gray;
-                }
-            }            
+            background-color: red;
+            height: 20vh;
         }
     }
-    &:hover{
-        box-shadow: 0px 2px 5px var(--c-cian1);
-        /* transform: scale(1.15); */
+    & .ItemSection
+    {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(4, auto);
+        column-gap: 5vw;
+        row-gap: 5vh;
+        padding: 5vh;    
+
+        background-color: var(--c-gray1);
+        grid-row: 2 / 5;
+        grid-column: 3 / 13;
+        
+        & .ItemCard
+        {
+            display: flex;
+            flex-direction: column;
+            border-radius: 10px;
+            /* background-color: rgb(192, 192, 192); */
+            height: 65vh;
+            width: 16vw;
+            border: 0.25px solid var(--c-cian1);
+            overflow: hidden;
+        
+            transition: 0.25s;    
+            & .ImageContainer
+            {
+                display: flex;
+                flex-direction: column;                      
+                & img 
+                {            
+                    height: 40vh;
+                    width: auto; 
+                    border-top-left-radius: 10px;   
+                    border-top-right-radius: 10px;
+                }
+            }
+            & .ContentResultContainer
+            {
+                display: flex;
+                flex-direction: column;
+                background-color: var(--c-white1);
+                height: 30vh;
+                border-bottom-left-radius: 10px;
+                border-bottom-right-radius: 10px;
+                & .NameContainer
+                {
+                    width: 14vw;
+                    height: 5vh;
+                    padding: 20px;
+                    text-overflow: ellipsis;            
+                }
+                & .PriceAndCartContainer
+                {
+                    display: flex;
+                    justify-content: space-between;
+                    /* justify-content: space-around; */
+                    & .PriceContainer
+                    {
+                        padding-left: 20px;
+                        padding-top: 10px;
+                        & p 
+                        {                
+                            font-size: 1.5rem;
+                        }            
+                    }
+                    & .ShoppingCartIconContainer
+                    {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        padding: 2.5px;
+                        margin-right: 15px;
+                        border-radius: 50px;
+                        width: 44px;
+                        height: 44px;
+                        background-color: var(--c-yellow1);  
+                        border: none;
+                        & i 
+                        {
+                            color: white;
+                            transition: 0.25s;                    
+                        }
+                        &:hover
+                        {
+                            & i
+                            {
+                                color: var(--c-neutral);
+                            }
+                        }
+                        &:active
+                        {
+                            background-color: var(--c-yellow2);
+                            box-shadow: 0px 0px 3px gray;
+                        }
+                    }            
+                }
+            }
+            &:hover{
+                box-shadow: 0px 2px 5px var(--c-cian1);
+                /* transform: scale(1.15); */
+            }
+        }
     }
 }
 .PageToggle
