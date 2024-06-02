@@ -101,8 +101,47 @@ main
         grid-column: 1 / 3;
         & .FilterContainer
         {
-            background-color: red;
-            height: 20vh;
+            border-radius: 10px;
+            margin-top: 5vh;
+            margin-left: 0.7vw;
+            margin-right: 0.7vw;
+            border: 0.25px solid rgb(191, 191, 191);                        
+            & .FilterContainerHeader
+            {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 8vh;
+            }
+            & .FilterButtons
+            {
+                & .FilterButtonContainer
+                {                    
+                    margin: 15px 10px;
+                    & .FilterButton
+                    {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        border-radius: 50px;                        
+                        width: 13vw;
+                        height: 7vh;
+                        border: 0.25px solid rgb(191, 191, 191);
+                        & .CircleButton
+                        {
+                            border-radius: 50px;
+                            border: 0.25px solid rgb(191, 191, 191);
+                            margin-right: 5px;                            
+                            width: 10px;
+                            height: 10px;
+                        }
+                        & .CategoryNameContainer
+                        {
+                            width: 10vw;
+                        }
+                    }
+                }
+            }
         }
     }
     & .ItemSection
@@ -183,6 +222,7 @@ main
                         height: 44px;
                         background-color: var(--c-yellow1);  
                         border: none;
+                        cursor: pointer;
                         & i 
                         {
                             color: white;

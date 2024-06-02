@@ -22,10 +22,7 @@
     padding: 0;    
 }
 body
-{
-    /* display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    grid-template-rows: repeat(4, auto); */
+{    
     background-color: var(--c-gray1);
 }
 button
@@ -95,8 +92,7 @@ main
     grid-template-rows: repeat(4, auto);
     & .ProductListSection
     {
-        grid-column: 1 / 9;
-        background-color: red;
+        grid-column: 1 / 9;        
         height: 86vh;
 
         & .ProductContainer
@@ -104,17 +100,15 @@ main
             display: flex;
             border-radius: 10px;
             margin: 9vh 1.8vw;
-            background-color: blue;
+            background-color: var(--c-white1);
             height: 35vh;
-
+            box-shadow: 0px 0px 2.5px var(--c-cian1);
             & .ContentContainer
             {
                 display: flex;
                 margin: 6vh 2vw;
-                background-color: azure;
                 height: 24vh;
-                width: 100%;
-                border-radius: 10px;
+                width: 100%;                
                 
                 & .ImageContainer
                 {
@@ -132,50 +126,86 @@ main
                     justify-content: space-between;
                     margin-left: 8vw;
                     width: 100%;
-                    background-color: lightblue;
+                    
                     & .DeleteButtonContainer
-                    {
+                    {                        
                         & button
                         {
-                            background-color: lightblue;
+                            cursor: pointer;
+                            background-color: var(--c-white1);
                         }
                     }
                     & .PurchaseSection
                     {
                         display: flex;
                         justify-content: space-between;
-                        border-radius: 50px;
-                        padding: 5px;
-                        background-color: aquamarine;
+                        border-radius: 10px;
+                        padding: 5px;                        
                         margin-bottom: 10px;
+                        & .quantity-container
+                        {
+                            display: flex;
+                            border-radius: 5px;
+                            align-items: center;
+                            gap: 10px;
+                            border: 1px solid rgb(194, 193, 193);
+
+                            & .quantity-button
+                            {
+                                width: 30px;
+                                height: 30px;
+                                background-color: var(--c-white1);
+                                color: black;    
+                                border-radius: 5px;
+                                cursor: pointer;
+                                font-size: 20px;
+                                line-height: 30px;
+                                text-align: center;
+
+                                &:disabled
+                                {
+                                    background-color: #cccccc;
+                                    cursor: not-allowed;
+                                }
+                            }
+                            & #quantity
+                            {
+                                font-size: 20px;
+                            }
+                        }
                     }
                 }
+            }
+            &:hover
+            {
+                box-shadow: 0px 0px 5px var(--c-cian1);
             }
         }
     }
     & .ResumeSection
     {
-        grid-column: 9 / 13;
-        background-color: yellow;
-        height: 86vh;
+        grid-column: 9 / 13;        
+        height: 86vh;        
         & .ResumeContainer
         {
             display: flex;
             flex-direction: column;
             border-radius: 10px;
             margin: 9vh 1.8vw;
-            background-color: aquamarine;
+            background-color: var(--c-white1);
             height: 38vh;
+            box-shadow: 0px 0px 2.5px var(--c-cian1);
             
             & .ResumeContainerHeader
             {
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                background-color: #8E44AD;
+                background-color: var(--c-white1);
                 border-top-left-radius: 10px;
                 border-top-right-radius: 10px;
-                height: 9vh;                
+                height: 9vh; 
+                box-shadow: 0px 0.5px 0.5px var(--c-cian1);
             }
             & .PricesSection
             {
@@ -183,6 +213,7 @@ main
                 flex-direction: column;
                 justify-content: space-between;
                 height: 20vh;
+                margin: 0px 25px;
                 & .IndividualProduct
                 {
                     display: flex;
@@ -203,16 +234,31 @@ main
             & .ButtonContainer
             {
                 height: 9vh;
-                margin-left: 10px;
-                margin-right: 10px;
+                margin: 0px 25px;
                 
                 & button
                 {
                     border-radius: 50px;                    
                     height: 7vh;
                     width: 100%;                    
-                    background-color: red;
+                    background-color: var(--c-yellow1);
+                    cursor: pointer;
+
+                    &:hover
+                    {
+                        background-color: var(--c-yellow2);
+                    }
+                    &:active
+                    {
+                        background-color: var(--c-blue1);
+                        color: white;
+                    }
                 }
+                
+            }
+            &:hover
+            {
+                box-shadow: 0px 0px 5px var(--c-cian1);
             }
         }
     }
