@@ -185,6 +185,7 @@ main
             border: 0.25px solid var(--c-cian1);
             overflow: hidden;
             cursor: pointer;
+            z-index: 1;
         
             transition: 0.25s;    
             & .ImageContainer
@@ -241,6 +242,7 @@ main
                         background-color: var(--c-yellow1);  
                         border: none;
                         cursor: pointer;
+                        z-index: 2;
                         & i 
                         {
                             color: white;

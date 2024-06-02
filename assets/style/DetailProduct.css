@@ -92,9 +92,7 @@ main
     grid-template-columns: repeat(12, 1fr);    
     & .product-container
     {
-        display: grid;
-        grid-template-columns: repeat(12, 1fr);
-        grid-template-rows: repeat(4, auto);
+        display: flex;
         background-color: var(--c-white1);
         border-radius: 10px; 
         margin: 8vh 2vw;
@@ -114,32 +112,41 @@ main
             display: flex;
             flex-direction: column;                       
             margin: 2vh 0px;
-            grid-column: 6 / 10;
+            width: 45vw;
+            height: 65vh;
+            overflow-y: scroll;
+            /* grid-column: 6 / 10; */
             & .product-detail-container-header
             {
                 display: flex;
                 justify-content: center;
             }
             & .product-detail-container-content
-            {
+            {                
                 margin-top: 1vh;
             }
         }
-        & .price-section
+        & .price-section-container
         {
             display: flex;
-            flex-direction: column;            
+            flex-direction: column; 
+            justify-content: space-between;
             margin: 2vh 2vw;
-            grid-column: 10 / 13;
-            border-radius: 10px;
-            height: 28vh;                        
+            /* grid-column: 10 / 13; */
+            border-radius: 10px;                                    
             box-shadow: 0px 0px 2.5px var(--c-cian1);
+            width: 22vw;
+            height: 40vh;    
             & .price-section-header
             {
                 display: flex;
                 justify-content: center;
                 margin-top: 10px;
-                margin-bottom: 10px;
+                margin-bottom: 10px;                
+                & h4
+                {
+                    margin: 0px 25px;
+                }
             }
             & .price-section-content
             {
@@ -150,7 +157,7 @@ main
                 & .cart-btn-container
                 {
                     height: 9vh;
-                    margin: 25px;
+                    margin: 15px 25px;
                     & .cart-btn
                     {
                         border-radius: 50px;                    

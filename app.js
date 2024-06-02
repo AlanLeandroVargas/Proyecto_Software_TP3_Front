@@ -7,6 +7,11 @@ let shoppingCart =
         products: []
     };
 
+function openDetailProductPage(value)
+{    
+    window.open('./DetailProduct.html?value=' + encodeURIComponent(value), '_self');
+}
+
 CreateItemSection();
 let shoppingCartInfoString = JSON.stringify(shoppingCart); 
 document.cookie = `shoppingCart=${encodeURIComponent(shoppingCartInfoString)}; path=/; max-age=3600`;
@@ -42,6 +47,7 @@ function CreateCards(products)
     products.forEach(product => {
         let newCard = document.createElement('article');
         newCard.classList.add("ItemCard");
+        newCard.addEventListener('click', () => {openDetailProductPage(product.id)});
         let cardImageContainer = document.createElement('section');
         cardImageContainer.classList.add("ImageContainer");
         let cardImage = document.createElement('img');
@@ -71,8 +77,9 @@ function CreateCards(products)
 
         let shoppingCartButton = document.createElement('button');
         shoppingCartButton.classList.add("ShoppingCartIconContainer");
-        shoppingCartButton.addEventListener('click', () => {
-            AddProduct(product.id);
+        shoppingCartButton.addEventListener('click', (e) => {
+            e.stopPropagation();
+            AddProduct(product.id);            
         })
         let icon = document.createElement('i');
         icon.classList.add("fa-solid");
