@@ -6,6 +6,7 @@
     --c-yellow2: rgb(222, 158, 47);
     --c-white1: rgba(255, 254, 254, 1);
     --c-gray1: rgba(241, 241, 241, 1);
+    --c-gray2: rgb(211, 211, 211);
     --c-cian1: rgba(192, 197, 230, 1);
 
     --c-lavender1: #6466A8;
@@ -27,6 +28,7 @@ body
     /* display: grid;
     grid-template-columns: repeat(12, 1fr);
     grid-template-rows: repeat(4, auto); */
+    font-family: 'Poppins';
     background-color: var(--c-gray1);
 }
 
@@ -127,6 +129,8 @@ main
                         width: 13vw;
                         height: 7vh;
                         border: 0.25px solid rgb(191, 191, 191);
+                        cursor: pointer;
+                        transition: 0.25s;
                         & .CircleButton
                         {
                             border-radius: 50px;
@@ -134,10 +138,23 @@ main
                             margin-right: 5px;                            
                             width: 10px;
                             height: 10px;
+                            transition: 0.25s;
                         }
                         & .CategoryNameContainer
                         {
                             width: 10vw;
+                        }
+                        &:hover
+                        {
+                            background-color: var(--c-gray2);                            
+                        }
+                        &:active
+                        {
+                            & .CircleButton
+                            {
+                                background-color: var(--c-yellow1);
+                                border: 0.25px solid var(--c-blue1);
+                            }
                         }
                     }
                 }
@@ -167,6 +184,7 @@ main
             width: 16vw;
             border: 0.25px solid var(--c-cian1);
             overflow: hidden;
+            cursor: pointer;
         
             transition: 0.25s;    
             & .ImageContainer
@@ -226,19 +244,23 @@ main
                         & i 
                         {
                             color: white;
-                            transition: 0.25s;                    
+                            transition: 0.25s;                              
                         }
                         &:hover
                         {
+                            background-color: var(--c-yellow2);
                             & i
                             {
-                                color: var(--c-neutral);
+                                color: var(--c-neutral);                                
                             }
                         }
                         &:active
                         {
-                            background-color: var(--c-yellow2);
-                            box-shadow: 0px 0px 3px gray;
+                            background-color: var(--c-blue1);                            
+                            & i
+                            {                                
+                                color: var(--c-white1);
+                            }
                         }
                     }            
                 }

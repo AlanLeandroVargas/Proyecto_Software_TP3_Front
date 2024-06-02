@@ -23,6 +23,7 @@
 }
 body
 {    
+    font-family: "Poppins";
     background-color: var(--c-gray1);
 }
 button

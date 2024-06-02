@@ -54,7 +54,7 @@ function CreateCards(products)
 
         let productNameContainer = document.createElement('section');
         productNameContainer.classList.add("NameContainer");
-        let productName = document.createElement('h4');
+        let productName = document.createElement('h5');
         productName.innerHTML = product.name;
         productNameContainer.appendChild(productName);
         contentResultContainer.appendChild(productNameContainer);
