@@ -1,3 +1,4 @@
+//Retrieving Data
 function getQueryParams() {
     let params = {};
     window.location.search.substring(1).split("&").forEach(function(part) {
@@ -6,11 +7,26 @@ function getQueryParams() {
     });
     return params;
 }
-
-
-const ItemSection = document.querySelector('.product-container');
-console.log(ItemSection);
-createProductDetails();
+async function fetchProduct()
+{
+    let params = getQueryParams();
+    let value = params["value"];
+    try
+    {
+        const response = await fetch(`http://localhost:5166/api/Product/${value}`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json(); // Wait for the response to be parsed as JSON
+        console.log(data);
+        return data;       
+    }
+    catch
+    {
+        console.error('Error fetching data:', error);
+    }
+}
+//Render
 async function createProductDetails()
 {
     let product = await fetchProduct();
@@ -19,7 +35,7 @@ async function createProductDetails()
     let productImage = document.createElement('img');
     productImage.src = product.imageUrl;
     ImageContainer.appendChild(productImage);
-    ItemSection.append(ImageContainer);
+    ITEM_SECTION.append(ImageContainer);
 
     let productDetailContainer = document.createElement('section');
     productDetailContainer.classList.add('product-detail-container');
@@ -35,7 +51,7 @@ async function createProductDetails()
     detail.innerHTML = product.description;
     productDetailContainerContent.appendChild(detail);
     productDetailContainer.appendChild(productDetailContainerContent);
-    ItemSection.append(productDetailContainer)
+    ITEM_SECTION.append(productDetailContainer)
     
     let priceSectionContainer = document.createElement('section');
     priceSectionContainer.classList.add('price-section-container');
@@ -71,26 +87,10 @@ async function createProductDetails()
     priceSectionBottom.appendChild(cartBtnContainer);
     priceSectionContainer.appendChild(priceSectionBottom);
 
-    ItemSection.append(priceSectionContainer);
-
+    ITEM_SECTION.append(priceSectionContainer);
 }
+//Functionality
+const ITEM_SECTION = document.querySelector('.product-container');
+console.log(ITEM_SECTION);
+createProductDetails();
 
-async function fetchProduct()
-{
-    let params = getQueryParams();
-    let value = params["value"];
-    try
-    {
-        const response = await fetch(`http://localhost:5166/api/Product/${value}`);
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        const data = await response.json(); // Wait for the response to be parsed as JSON
-        console.log(data);
-        return data;       
-    }
-    catch
-    {
-        console.error('Error fetching data:', error);
-    }
-}

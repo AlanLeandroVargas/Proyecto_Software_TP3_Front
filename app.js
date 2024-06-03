@@ -1,48 +1,42 @@
-const ItemSection = document.querySelector('.ItemSection');
-console.log(ItemSection);
-let apiData;
-let currentOffset = 0;
-let shoppingCart = 
-    {
-        products: []
-    };
-
-function openDetailProductPage(value)
-{    
-    window.open('./DetailProduct.html?value=' + encodeURIComponent(value), '_self');
-}
-
-CreateItemSection();
-let shoppingCartInfoString = JSON.stringify(shoppingCart); 
-document.cookie = `shoppingCart=${encodeURIComponent(shoppingCartInfoString)}; path=/; max-age=3600`;
-
-function RetrieveProducts()
+//Retrieving Data
+async function retrieveProducts()
 {
-    return fetch(`http://localhost:5166/api/Product?offset=${currentOffset}&limit=12`)
-    .then(response => {
+    try
+    {        
+        const response = await fetch(`http://localhost:5166/api/Product?offset=${currentOffset}&limit=12`);
         if (!response.ok) {
-            throw new Error('Network response was not ok ' + response.statusText);
-        }
-        return response.json();
-        })
-    .then(data => {
-        apiData = data;        
-        })
-    .catch(error => {
-        console.error('There has been a problem with your fetch operation:', error);
-        });
-}
-function CreateItemSection()
-{
-    RetrieveProducts().then(() => {
-        // Ensure fetchData() has completed before using apiData
-        console.log('apiData after fetching:', apiData);
-        // Use apiData here
-        CreateCards(apiData);
-        });
+            
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }        
+        const data = await response.json(); // Wait for the response to be parsed as JSON        
+        return data;
+    }
+    catch
+    {
+        console.error('Error fetching data:', error);
+    }    
 }
 
-function CreateCards(products)
+async function fetchProductsWithFiltering(search)
+{        
+    try
+    {        
+        const response = await fetch(`http://localhost:5166/api/Product?name=${search}&offset=${currentOffset}&limit=12`);
+        if (!response.ok) {
+            
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }        
+        const data = await response.json(); // Wait for the response to be parsed as JSON
+        console.log(data);
+        return data;
+    }
+    catch
+    {
+        console.error('Error fetching data:', error);
+    }
+}
+//Render
+function createCards(products)
 {
     products.forEach(product => {
         let newCard = document.createElement('article');
@@ -78,8 +72,8 @@ function CreateCards(products)
         let shoppingCartButton = document.createElement('button');
         shoppingCartButton.classList.add("ShoppingCartIconContainer");
         shoppingCartButton.addEventListener('click', (e) => {
-            e.stopPropagation();
-            AddProduct(product.id);            
+            addProduct(product.id); 
+            e.stopPropagation();                       
         })
         let icon = document.createElement('i');
         icon.classList.add("fa-solid");
@@ -91,34 +85,57 @@ function CreateCards(products)
         contentResultContainer.appendChild(priceAndCartContainer);
 
         newCard.appendChild(contentResultContainer);
-        ItemSection.append(newCard);
+        ITEM_SECTION.append(newCard);
     });
     let pageNextToggle = document.createElement('button');
-    pageNextToggle.addEventListener('click', NextPage);
+    pageNextToggle.addEventListener('click', nextPage);
     pageNextToggle.classList.add('PageToggle');
     pageNextToggle.innerHTML = "Next";
-    ItemSection.appendChild(pageNextToggle);
+    ITEM_SECTION.appendChild(pageNextToggle);
 
     let pagePreviousToggle = document.createElement('button');
-    pagePreviousToggle.addEventListener('click', PreviousPage);
+    pagePreviousToggle.addEventListener('click', previousPage);
     pagePreviousToggle.classList.add('PageToggle');
     pagePreviousToggle.innerHTML = "Previous";
-    ItemSection.appendChild(pagePreviousToggle);
+    ITEM_SECTION.appendChild(pagePreviousToggle);
 }
-
-function NextPage()
+//Rendering - Paginado
+function nextPage()
 {    
     currentOffset += 12; 
-    ItemSection.innerHTML = '';    
-    CreateItemSection();
+    ITEM_SECTION.innerHTML = '';    
+    createItemSection();
 }
-function PreviousPage()
+function previousPage()
 {
     currentOffset -= 12; 
-    ItemSection.innerHTML = '';    
-    CreateItemSection();
+    ITEM_SECTION.innerHTML = '';    
+    createItemSection();
 }
-function AddProduct(productId)
+//Rendering - CardCreation
+async function createItemSection()
+{
+    let products = await retrieveProducts()        
+    createCards(products);
+}
+async function CreateSearchedItemSection(search)
+{
+    let products = await fetchProductsWithFiltering(search);
+    createCards(products);
+}
+
+
+function disposeCards()
+{
+    ITEM_SECTION.innerHTML = ""
+}
+//Redirectioning
+function openDetailProductPage(value)
+{    
+    window.open('./DetailProduct.html?value=' + encodeURIComponent(value), '_self');
+}
+// Functionality 
+function addProduct(productId)
 {
     let product = shoppingCart.products.find(p => p.productId == productId);
     if(product)
@@ -135,3 +152,26 @@ function AddProduct(productId)
     shoppingCartInfoString = JSON.stringify(shoppingCart); 
     document.cookie = `shoppingCart=${encodeURIComponent(shoppingCartInfoString)}; path=/; max-age=3600`;
 }
+
+const ITEM_SECTION = document.querySelector('.ItemSection');
+console.log(ITEM_SECTION);
+let apiData;
+let currentOffset = 0;
+let shoppingCart = 
+    {
+        products: []
+    };
+
+createItemSection();
+let shoppingCartInfoString = JSON.stringify(shoppingCart); 
+document.cookie = `shoppingCart=${encodeURIComponent(shoppingCartInfoString)}; path=/; max-age=3600`;
+
+const searchBar = document.querySelector('#searchBar');
+searchBar.addEventListener('input', (e) =>
+    {        
+        disposeCards();
+        CreateSearchedItemSection(e.target.value)
+    });
+
+
+

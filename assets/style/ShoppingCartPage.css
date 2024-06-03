@@ -91,27 +91,27 @@ main
     display: grid;
     grid-template-columns: repeat(12, 1fr);
     grid-template-rows: repeat(4, auto);
-    & .ProductListSection
+    & .product-list-section
     {
         grid-column: 1 / 9;        
         height: 86vh;
 
-        & .ProductContainer
+        & .product-container
         {
             display: flex;
             border-radius: 10px;
-            margin: 9vh 1.8vw;
+            margin: 6vh 1.8vw;
             background-color: var(--c-white1);
             height: 35vh;
             box-shadow: 0px 0px 2.5px var(--c-cian1);
-            & .ContentContainer
+            & .product-content-container
             {
                 display: flex;
                 margin: 6vh 2vw;
                 height: 24vh;
                 width: 100%;                
                 
-                & .ImageContainer
+                & .product-image-container
                 {
                     margin: 2vh;                    
                     & img
@@ -120,7 +120,7 @@ main
                         height: 20vh;
                     }
                 }
-                & .InformationContainer
+                & .product-information-container
                 {
                     display: flex;
                     flex-direction: column;
@@ -128,7 +128,7 @@ main
                     margin-left: 8vw;
                     width: 100%;
                     
-                    & .DeleteButtonContainer
+                    & .btn-container
                     {                        
                         & button
                         {
@@ -136,7 +136,7 @@ main
                             background-color: var(--c-white1);
                         }
                     }
-                    & .PurchaseSection
+                    & .quantity-price-container
                     {
                         display: flex;
                         justify-content: space-between;
@@ -183,21 +183,21 @@ main
             }
         }
     }
-    & .ResumeSection
+    & .summary-section-container
     {
         grid-column: 9 / 13;        
         height: 86vh;        
-        & .ResumeContainer
+        & .summary-section
         {
             display: flex;
             flex-direction: column;
             border-radius: 10px;
-            margin: 9vh 1.8vw;
+            margin: 6vh 1.8vw;
             background-color: var(--c-white1);
             height: 38vh;
             box-shadow: 0px 0px 2.5px var(--c-cian1);
             
-            & .ResumeContainerHeader
+            & .summary-section-header
             {
                 display: flex;
                 justify-content: center;
@@ -208,14 +208,14 @@ main
                 height: 9vh; 
                 box-shadow: 0px 0.5px 0.5px var(--c-cian1);
             }
-            & .PricesSection
+            & .price-section
             {
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
                 height: 20vh;
                 margin: 0px 25px;
-                & .IndividualProduct
+                & .price-product
                 {
                     display: flex;
                     justify-content: space-between;
@@ -223,7 +223,7 @@ main
                     margin-left: 10px;
                     margin-right: 10px;
                 }
-                & .Total
+                & .price-total
                 {
                     display: flex;
                     justify-content: space-between;
@@ -232,7 +232,7 @@ main
                     margin-right: 10px;
                 }
             }
-            & .ButtonContainer
+            & .summary-section-btn
             {
                 height: 9vh;
                 margin: 0px 25px;
