@@ -72,18 +72,18 @@ function createCards(products)
         priceContainer.appendChild(price);
         priceAndCartContainer.appendChild(priceContainer);
 
-        let shoppingCartButton = document.createElement('button');
-        shoppingCartButton.classList.add("shopping-cart-icon-container");
-        shoppingCartButton.addEventListener('click', (e) => {
-            addProduct(product.id); 
-            e.stopPropagation();                       
-        })
-        let icon = document.createElement('i');
-        icon.classList.add("fa-solid");
-        icon.classList.add("fa-cart-shopping");
-        icon.classList.add("fa-xl");        
-        shoppingCartButton.appendChild(icon);
-        priceAndCartContainer.appendChild(shoppingCartButton);
+        // let shoppingCartButton = document.createElement('button');
+        // shoppingCartButton.classList.add("shopping-cart-icon-container");
+        // shoppingCartButton.addEventListener('click', (e) => {
+        //     addProduct(product.id); 
+        //     e.stopPropagation();                       
+        // })
+        // let icon = document.createElement('i');
+        // icon.classList.add("fa-solid");
+        // icon.classList.add("fa-cart-shopping");
+        // icon.classList.add("fa-xl");        
+        // shoppingCartButton.appendChild(icon);
+        // priceAndCartContainer.appendChild(shoppingCartButton);
 
         contentResultContainer.appendChild(priceAndCartContainer);
 
