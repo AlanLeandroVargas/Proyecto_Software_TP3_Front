@@ -33,6 +33,7 @@ function createCards(productsAndQuantities)
     productsAndQuantities.forEach(product => {
         let newCard = document.createElement('section');
         newCard.classList.add('product-container');
+        newCard.classList.add('id-' + product.product.id);
 
         let productContentContainer = document.createElement('section');
         productContentContainer.classList.add('product-content-container')        
@@ -56,20 +57,34 @@ function createCards(productsAndQuantities)
         productBtnContainer.classList.add('btn-container');
         let productBtn = document.createElement('button');
         productBtn.innerHTML = "Eliminar";
+        productBtn.addEventListener('click', () => {
+            deleteProduct(product.product.id);
+        })
         productBtnContainer.appendChild(productBtn);
         productInformationContainer.appendChild(productBtnContainer);
         let productQuantityPriceContainer = document.createElement('section');
         productQuantityPriceContainer.classList.add('quantity-price-container');
         let productQuantityContainer = document.createElement('section');
+
+        //Quantity Section
         productQuantityContainer.classList.add('quantity-container')
+
         let increaseBtn = document.createElement('button');
         increaseBtn.classList.add('quantity-button');
-        increaseBtn.innerText = "+";
+        increaseBtn.innerText = "+";        
+        increaseBtn.addEventListener('click', () => {
+            addProduct(product.product.id)
+        });
+
         let quantity = document.createElement('span');
-        quantity.innerHTML = 1;
+        quantity.classList.add('quantity-' + product.product.id);
+        quantity.innerHTML = product.quantity;
         let decreaseBtn = document.createElement('button');
         decreaseBtn.classList.add('quantity-button');
         decreaseBtn.innerText = "-";
+        decreaseBtn.addEventListener('click', () => {
+            removeProduct(product.product.id);
+        })
         productQuantityContainer.appendChild(decreaseBtn);        
         productQuantityContainer.appendChild(quantity);
         productQuantityContainer.appendChild(increaseBtn);
@@ -79,18 +94,57 @@ function createCards(productsAndQuantities)
         productQuantityPriceContainer.appendChild(price);
         productInformationContainer.appendChild(productQuantityPriceContainer);
         productContentContainer.appendChild(productInformationContainer);
+
         newCard.appendChild(productContentContainer);
-        ProductList.append(newCard);
+        PRODUCT_LIST.append(newCard);
     });
 }
-//Functionality
-async function fuckem() //WTF is this?
+async function renderCards() //WTF is this?
 {
     let storedUserShoppingCart = getCookie('shoppingCart');
     let parsedStoredUserShoppingCart = JSON.parse(storedUserShoppingCart); 
+    console.log(parsedStoredUserShoppingCart);
     let productsAndQuantities = await FetchProducts(parsedStoredUserShoppingCart);
     createCards(productsAndQuantities);
 }
+async function renderSummary()
+{
+    let storedUserShoppingCart = getCookie('shoppingCart');
+    let parsedStoredUserShoppingCart = JSON.parse(storedUserShoppingCart);  
+    let productsAndQuantities = await FetchProducts(parsedStoredUserShoppingCart);
+    let total = await ComputeAll(productsAndQuantities);    
+    PRICE_TOTAL.innerHTML = total;
+    let quantity = computeQuantity(productsAndQuantities);
+    PRODUCT_QUANTITY.innerHTML = quantity;
+}
+function updateQuantities(productId, add)
+{
+    if(add)
+        {
+            let productQuantity = document.querySelector(`.quantity-${productId}`);
+            productQuantity.innerHTML = parseInt(productQuantity.innerHTML) + 1;
+            let productsQuantities = document.querySelector('.price-product-quantity');
+            console.log(productsQuantities);
+            productsQuantities.innerHTML = parseInt(productsQuantities.innerHTML) + 1;
+        }
+    else
+    {
+        let productQuantity = document.querySelector(`.quantity-${productId}`);
+        productQuantity.innerHTML = parseInt(productQuantity.innerHTML) - 1;
+        let productsQuantities = document.querySelector('.price-product-quantity');
+        console.log(productsQuantities);
+        productsQuantities.innerHTML = parseInt(productsQuantities.innerHTML) - 1;
+    }
+    
+}
+function deleteProductCard(productId)
+{
+    let productCard = document.querySelector(`.id-${productId}`);
+    console.log(productCard);
+    productCard.remove();
+    
+}
+//Functionality
 async function BuyShoppingCart()
 {
     let storedUserShoppingCart = getCookie('shoppingCart');
@@ -124,22 +178,16 @@ async function InsertSale(data)
     console.log(JSON.stringify(data));
     return response.json();
 }
-async function ComputeAll()
-{    
-    let subTotal = ComputeSubTotal(productsAndQuantities);
-    console.log(productsAndQuantities);
-    console.log(subTotal);
-    let totalDiscount = ComputeTotalDiscount(productsAndQuantities);
-    console.log("TOTAL DISCOUNT");
-    console.log(totalDiscount);
+async function ComputeAll(productsAndQuantities)
+{        
+    let subTotal = ComputeSubTotal(productsAndQuantities);    
+    let totalDiscount = ComputeTotalDiscount(productsAndQuantities);    
     let total = ComputeTotal(subTotal, totalDiscount, 1.21);
-    console.log("TOTAL");
-    console.log(total);
+    return total;
 }
 function ComputeSubTotal(productsAndQuantities)
 {    
-    total = 0;
-    console.log(productsAndQuantities.length);
+    total = 0;    
     productsAndQuantities.forEach(product => {        
         total += product.product.price * product.quantity        
     });
@@ -163,4 +211,61 @@ function ComputeTotal(subTotal, totalDiscount, taxes)
     total = (subTotal - totalDiscount) * taxes;
     return total;
 }
-const PRODUCT_LIST = document.querySelector('.product-list-section')
+function computeQuantity(productsAndQuantities)
+{
+    let quantity = 0;
+    productsAndQuantities.forEach(product => {  
+        quantity += product.quantity;
+    });
+    return quantity;
+}
+
+function addProduct(productId)
+{
+    let storedUserShoppingCart = getCookie('shoppingCart');
+    let parsedStoredUserShoppingCart = JSON.parse(storedUserShoppingCart);
+    let product = parsedStoredUserShoppingCart.products.find(p => p.productId == productId);
+    if(product)
+        {
+            product.quantity += 1;
+        }
+    shoppingCartInfoString = JSON.stringify(parsedStoredUserShoppingCart); 
+    document.cookie = `shoppingCart=${encodeURIComponent(shoppingCartInfoString)}; path=/; max-age=3600`;
+    updateQuantities(productId, true);
+}
+function removeProduct(productId)
+{
+    let storedUserShoppingCart = getCookie('shoppingCart');
+    let parsedStoredUserShoppingCart = JSON.parse(storedUserShoppingCart);
+    let product = parsedStoredUserShoppingCart.products.find(p => p.productId == productId);    
+    if(product && product.quantity > 1)
+        {
+            product.quantity -= 1;
+            shoppingCartInfoString = JSON.stringify(parsedStoredUserShoppingCart); 
+            document.cookie = `shoppingCart=${encodeURIComponent(shoppingCartInfoString)}; path=/; max-age=3600`;
+            updateQuantities(productId, false);
+        }    
+}
+function deleteProduct(productId)
+{
+    let storedUserShoppingCart = getCookie('shoppingCart');
+    let parsedStoredUserShoppingCart = JSON.parse(storedUserShoppingCart);
+    console.log('Before');
+    console.log(parsedStoredUserShoppingCart);     
+    let indexProduct = parsedStoredUserShoppingCart.products.findIndex(p => p.productId == productId);
+    console.log(indexProduct);    
+    parsedStoredUserShoppingCart.products.splice(indexProduct, 1);
+    shoppingCartInfoString = JSON.stringify(parsedStoredUserShoppingCart); 
+    document.cookie = `shoppingCart=${encodeURIComponent(shoppingCartInfoString)}; path=/; max-age=3600`;
+    console.log('After');
+    console.log(parsedStoredUserShoppingCart);
+    deleteProductCard(productId);
+}
+
+
+
+const PRODUCT_LIST = document.querySelector('.product-list-section');
+const PRICE_TOTAL = document.querySelector('.price-total-value');
+const PRODUCT_QUANTITY = document.querySelector('.price-product-quantity');
+renderCards();
+renderSummary();

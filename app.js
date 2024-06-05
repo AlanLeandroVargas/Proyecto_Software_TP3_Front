@@ -164,7 +164,7 @@ let shoppingCart =
 
 createItemSection();
 let shoppingCartInfoString = JSON.stringify(shoppingCart); 
-document.cookie = `shoppingCart=${encodeURIComponent(shoppingCartInfoString)}; path=/; max-age=3600`;
+//document.cookie = `shoppingCart=${encodeURIComponent(shoppingCartInfoString)}; path=/; max-age=3600`;
 
 const searchBar = document.querySelector('#searchBar');
 searchBar.addEventListener('input', (e) =>
