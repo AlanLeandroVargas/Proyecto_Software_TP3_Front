@@ -1,3 +1,8 @@
+document.addEventListener('DOMContentLoaded', async () => 
+    {        
+        let sales =  await fetchSales();
+        console.log(sales);
+    })
 //Retrieving Data
 function getCookie(name) {
     const value = `; ${document.cookie}`;
@@ -26,6 +31,22 @@ async function FetchProducts(parsedStoredUserShoppingCart) {
             }
         }
     return productsAndQuantities;
+}
+async function fetchSales(from = null, to = null)
+{
+    try
+    {
+        const response = await fetch(`http://localhost:5166/api/Sale?from=2024%2F05%2F30&to=2024%2F06%2F30`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json();
+        return data; 
+    }
+    catch
+    {
+        console.error('Error fetching data:', error);
+    }
 }
 //Render
 function createCards(productsAndQuantities)
