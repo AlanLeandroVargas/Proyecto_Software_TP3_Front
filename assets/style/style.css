@@ -24,18 +24,14 @@
 }
 
 body
-{
-    /* display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    grid-template-rows: repeat(4, auto); */
+{    
     font-family: 'Poppins';
     background-color: var(--c-gray1);
 }
 
 header
 {   
-    height: 14vh;
-    /* grid-column: 1 / 13; */
+    height: 14vh;   
     background-color: var(--c-blue1);        
     & .nav-bar
     {
@@ -63,6 +59,15 @@ header
                 outline: none;
                 height: 6vh;
                 width: 31vw;                                                
+            }
+        }
+        & .sales-container
+        {
+            & .sale-icon-container
+            {
+                & a {
+                    color: white;
+                }
             }
         }
         & .shopping-cart-container
@@ -170,7 +175,7 @@ main
         display: grid;
         grid-template-columns: repeat(4, 1fr);
         grid-template-rows: repeat(4, auto);
-        column-gap: 5vw;
+        column-gap: 1vw;
         row-gap: 5vh;
         padding: 5vh;    
 
@@ -185,7 +190,7 @@ main
             border-radius: 10px;
             /* background-color: rgb(192, 192, 192); */
             height: 65vh;
-            width: 16vw;
+            width: 18vw;
             border: 0.25px solid var(--c-cian1);
             overflow: hidden;
             cursor: pointer;
