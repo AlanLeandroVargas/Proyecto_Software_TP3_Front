@@ -1,4 +1,24 @@
+let shoppingCart = 
+        {
+            products: []
+        };
+let shoppingCartInfoString; 
 //Retrieving Data
+document.addEventListener('DOMContentLoaded', () => 
+    {
+        console.log('HEREEE');
+        let storedUserShoppingCart = getCookie('shoppingCart');
+        let parsedStoredUserShoppingCart = JSON.parse(storedUserShoppingCart); 
+        shoppingCart = parsedStoredUserShoppingCart;
+        console.log(shoppingCart);
+    })
+
+function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return decodeURIComponent(parts.pop().split(';').shift());
+}
+    
 async function retrieveProducts()
 {
     try
@@ -156,14 +176,9 @@ function addProduct(productId)
 const ITEM_SECTION = document.querySelector('.ItemSection');
 console.log(ITEM_SECTION);
 let apiData;
-let currentOffset = 0;
-let shoppingCart = 
-    {
-        products: []
-    };
-
+let currentOffset = 0; 
 createItemSection();
-let shoppingCartInfoString = JSON.stringify(shoppingCart); 
+
 //document.cookie = `shoppingCart=${encodeURIComponent(shoppingCartInfoString)}; path=/; max-age=3600`;
 
 const searchBar = document.querySelector('#searchBar');
