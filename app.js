@@ -5,8 +5,7 @@ let shoppingCart =
 let shoppingCartInfoString; 
 //Retrieving Data
 document.addEventListener('DOMContentLoaded', () => 
-    {
-        console.log('HEREEE');
+    {        
         let storedUserShoppingCart = getCookie('shoppingCart');
         let parsedStoredUserShoppingCart = JSON.parse(storedUserShoppingCart); 
         shoppingCart = parsedStoredUserShoppingCart;
@@ -19,16 +18,19 @@ function getCookie(name) {
     if (parts.length === 2) return decodeURIComponent(parts.pop().split(';').shift());
 }
     
-async function retrieveProducts()
+async function retrieveProducts(search = '%00', category = '%00')
 {
     try
     {        
-        const response = await fetch(`http://localhost:5166/api/Product?offset=${currentOffset}&limit=12`);
-        if (!response.ok) {
-            
+        const response = await fetch
+            (`http://localhost:5166/api/Product?name=${search}&category=${category}&offset=${currentOffset}&limit=12`);
+        if (!response.ok) {            
             throw new Error(`HTTP error! Status: ${response.status}`);
-        }        
-        const data = await response.json(); // Wait for the response to be parsed as JSON        
+        }                
+        const data = await response.json(); // Wait for the response to be parsed as JSON    
+        console.log(response);
+        console.log('Payload'); 
+        console.log(data);   
         return data;
     }
     catch
@@ -36,61 +38,42 @@ async function retrieveProducts()
         console.error('Error fetching data:', error);
     }    
 }
-
-async function fetchProductsWithFiltering(search)
-{        
-    try
-    {        
-        const response = await fetch(`http://localhost:5166/api/Product?name=${search}&offset=${currentOffset}&limit=12`);
-        if (!response.ok) {
-            
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }        
-        const data = await response.json(); // Wait for the response to be parsed as JSON
-        console.log(data);
-        return data;
-    }
-    catch
-    {
-        console.error('Error fetching data:', error);
-    }
-}
 //Render
 function createCards(products)
 {
     products.forEach(product => {
         let newCard = document.createElement('article');
-        newCard.classList.add("ItemCard");
+        newCard.classList.add("item-card");
         newCard.addEventListener('click', () => {openDetailProductPage(product.id)});
         let cardImageContainer = document.createElement('section');
-        cardImageContainer.classList.add("ImageContainer");
+        cardImageContainer.classList.add("image-container");
         let cardImage = document.createElement('img');
         cardImage.src = product.imageUrl;
         cardImageContainer.appendChild(cardImage);
         newCard.appendChild(cardImageContainer);
 
         let contentResultContainer = document.createElement('section');
-        contentResultContainer.classList.add("ContentResultContainer");
+        contentResultContainer.classList.add("content-result-container");
 
         let productNameContainer = document.createElement('section');
-        productNameContainer.classList.add("NameContainer");
+        productNameContainer.classList.add("name-container");
         let productName = document.createElement('h5');
         productName.innerHTML = product.name;
         productNameContainer.appendChild(productName);
         contentResultContainer.appendChild(productNameContainer);
 
         let priceAndCartContainer = document.createElement('section');
-        priceAndCartContainer.classList.add("PriceAndCartContainer");
+        priceAndCartContainer.classList.add("price-and-cart-container");
         
         let priceContainer = document.createElement('section');
-        priceContainer.classList.add("PriceContainer");
+        priceContainer.classList.add("price-container");
         let price = document.createElement('p');
         price.innerHTML = "$" + product.price;
         priceContainer.appendChild(price);
         priceAndCartContainer.appendChild(priceContainer);
 
         let shoppingCartButton = document.createElement('button');
-        shoppingCartButton.classList.add("ShoppingCartIconContainer");
+        shoppingCartButton.classList.add("shopping-cart-icon-container");
         shoppingCartButton.addEventListener('click', (e) => {
             addProduct(product.id); 
             e.stopPropagation();                       
@@ -109,13 +92,13 @@ function createCards(products)
     });
     let pageNextToggle = document.createElement('button');
     pageNextToggle.addEventListener('click', nextPage);
-    pageNextToggle.classList.add('PageToggle');
+    pageNextToggle.classList.add('page-toggle');
     pageNextToggle.innerHTML = "Next";
     ITEM_SECTION.appendChild(pageNextToggle);
 
     let pagePreviousToggle = document.createElement('button');
     pagePreviousToggle.addEventListener('click', previousPage);
-    pagePreviousToggle.classList.add('PageToggle');
+    pagePreviousToggle.classList.add('page-toggle');
     pagePreviousToggle.innerHTML = "Previous";
     ITEM_SECTION.appendChild(pagePreviousToggle);
 }
@@ -133,18 +116,11 @@ function previousPage()
     createItemSection();
 }
 //Rendering - CardCreation
-async function createItemSection()
+async function createItemSection(search = '%00', category = '%00')
 {
-    let products = await retrieveProducts()        
+    let products = await retrieveProducts(search, category);
     createCards(products);
 }
-async function CreateSearchedItemSection(search)
-{
-    let products = await fetchProductsWithFiltering(search);
-    createCards(products);
-}
-
-
 function disposeCards()
 {
     ITEM_SECTION.innerHTML = ""
@@ -173,7 +149,7 @@ function addProduct(productId)
     document.cookie = `shoppingCart=${encodeURIComponent(shoppingCartInfoString)}; path=/; max-age=3600`;
 }
 
-const ITEM_SECTION = document.querySelector('.ItemSection');
+const ITEM_SECTION = document.querySelector('.item-section');
 console.log(ITEM_SECTION);
 let apiData;
 let currentOffset = 0; 
@@ -181,12 +157,21 @@ createItemSection();
 
 //document.cookie = `shoppingCart=${encodeURIComponent(shoppingCartInfoString)}; path=/; max-age=3600`;
 
+//Search
 const searchBar = document.querySelector('#searchBar');
 searchBar.addEventListener('input', (e) =>
     {        
         disposeCards();
-        CreateSearchedItemSection(e.target.value)
+        createItemSection(e.target.value)
     });
+
+//Category Filter
+function filterByCategory(category)
+{
+    console.log('Here');
+    disposeCards();
+    createItemSection('%00', category);
+}
 
 
 
