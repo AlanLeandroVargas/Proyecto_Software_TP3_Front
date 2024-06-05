@@ -138,30 +138,37 @@ async function renderSummary()
     let quantity = computeQuantity(productsAndQuantities);
     PRODUCT_QUANTITY.innerHTML = quantity;
 }
-function updateQuantities(productId, add)
+function updateProductQuantities(productId, add, amount)
 {
     if(add)
         {
             let productQuantity = document.querySelector(`.quantity-${productId}`);
             productQuantity.innerHTML = parseInt(productQuantity.innerHTML) + 1;
-            let productsQuantities = document.querySelector('.price-product-quantity');
-            console.log(productsQuantities);
-            productsQuantities.innerHTML = parseInt(productsQuantities.innerHTML) + 1;
+            updateSummaryQuantities(true, amount);
         }
     else
     {
         let productQuantity = document.querySelector(`.quantity-${productId}`);
         productQuantity.innerHTML = parseInt(productQuantity.innerHTML) - 1;
-        let productsQuantities = document.querySelector('.price-product-quantity');
-        console.log(productsQuantities);
-        productsQuantities.innerHTML = parseInt(productsQuantities.innerHTML) - 1;
+        updateSummaryQuantities(false, amount);
     }
     
 }
+function updateSummaryQuantities(add, amount)
+{
+    let productsQuantities = document.querySelector('.price-product-quantity');
+    if(add)
+        {
+            productsQuantities.innerHTML = parseInt(productsQuantities.innerHTML) + amount;
+        }
+    else
+    {
+        productsQuantities.innerHTML = parseInt(productsQuantities.innerHTML) - amount;
+    }
+}
 function deleteProductCard(productId)
 {
-    let productCard = document.querySelector(`.id-${productId}`);
-    console.log(productCard);
+    let productCard = document.querySelector(`.id-${productId}`);    
     productCard.remove();
     
 }
@@ -252,7 +259,7 @@ function addProduct(productId)
         }
     shoppingCartInfoString = JSON.stringify(parsedStoredUserShoppingCart); 
     document.cookie = `shoppingCart=${encodeURIComponent(shoppingCartInfoString)}; path=/; max-age=3600`;
-    updateQuantities(productId, true);
+    updateProductQuantities(productId, true, 1);
 }
 function removeProduct(productId)
 {
@@ -264,22 +271,19 @@ function removeProduct(productId)
             product.quantity -= 1;
             shoppingCartInfoString = JSON.stringify(parsedStoredUserShoppingCart); 
             document.cookie = `shoppingCart=${encodeURIComponent(shoppingCartInfoString)}; path=/; max-age=3600`;
-            updateQuantities(productId, false);
+            updateProductQuantities(productId, false, 1);
         }    
 }
 function deleteProduct(productId)
 {
     let storedUserShoppingCart = getCookie('shoppingCart');
-    let parsedStoredUserShoppingCart = JSON.parse(storedUserShoppingCart);
-    console.log('Before');
-    console.log(parsedStoredUserShoppingCart);     
-    let indexProduct = parsedStoredUserShoppingCart.products.findIndex(p => p.productId == productId);
-    console.log(indexProduct);    
+    let parsedStoredUserShoppingCart = JSON.parse(storedUserShoppingCart);      
+    let product = parsedStoredUserShoppingCart.products.find(p => p.productId == productId);
+    let indexProduct = parsedStoredUserShoppingCart.products.findIndex(p => p.productId == productId);    
     parsedStoredUserShoppingCart.products.splice(indexProduct, 1);
     shoppingCartInfoString = JSON.stringify(parsedStoredUserShoppingCart); 
-    document.cookie = `shoppingCart=${encodeURIComponent(shoppingCartInfoString)}; path=/; max-age=3600`;
-    console.log('After');
-    console.log(parsedStoredUserShoppingCart);
+    document.cookie = `shoppingCart=${encodeURIComponent(shoppingCartInfoString)}; path=/; max-age=3600`;   
+    updateSummaryQuantities(false, product.quantity);
     deleteProductCard(productId);
 }
 
