@@ -68,7 +68,7 @@ async function createProductDetails()
     let priceSectionContent = document.createElement('section');
     priceSectionContent.classList.add('price-section-content');
     let productPrice = document.createElement('h3');
-    productPrice.innerHTML = "$" + product.price;
+    productPrice.innerHTML = "$" + formatNumber(product.price);
     priceSectionContent.appendChild(productPrice);
     priceSectionContainer.appendChild(priceSectionContent);
 
@@ -90,6 +90,13 @@ async function createProductDetails()
     ITEM_SECTION.append(priceSectionContainer);
 }
 //Functionality
+function formatNumber(number) {
+    return new Intl.NumberFormat('de-DE', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    }).format(number);
+}
+
 const ITEM_SECTION = document.querySelector('.product-container');
 console.log(ITEM_SECTION);
 createProductDetails();

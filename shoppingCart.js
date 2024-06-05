@@ -111,7 +111,7 @@ function createCards(productsAndQuantities)
         productQuantityContainer.appendChild(increaseBtn);
         productQuantityPriceContainer.appendChild(productQuantityContainer);
         let price = document.createElement('h3');
-        price.innerHTML = "$ " + product.product.price;
+        price.innerHTML = "$ " + formatNumber(product.product.price);
         productQuantityPriceContainer.appendChild(price);
         productInformationContainer.appendChild(productQuantityPriceContainer);
         productContentContainer.appendChild(productInformationContainer);
@@ -173,6 +173,12 @@ function deleteProductCard(productId)
     
 }
 //Functionality
+function formatNumber(number) {
+    return new Intl.NumberFormat('de-DE', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    }).format(number);
+}
 async function BuyShoppingCart()
 {
     let storedUserShoppingCart = getCookie('shoppingCart');
@@ -211,7 +217,8 @@ async function ComputeAll(productsAndQuantities)
     let subTotal = ComputeSubTotal(productsAndQuantities);    
     let totalDiscount = ComputeTotalDiscount(productsAndQuantities);    
     let total = ComputeTotal(subTotal, totalDiscount, 1.21);
-    return total;
+    let roundedTotal = formatNumber(total);
+    return roundedTotal;
 }
 function ComputeSubTotal(productsAndQuantities)
 {    

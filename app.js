@@ -68,7 +68,7 @@ function createCards(products)
         let priceContainer = document.createElement('section');
         priceContainer.classList.add("price-container");
         let price = document.createElement('p');
-        price.innerHTML = "$" + product.price;
+        price.innerHTML = "$" + formatNumber(product.price);
         priceContainer.appendChild(price);
         priceAndCartContainer.appendChild(priceContainer);
 
@@ -131,6 +131,12 @@ function openDetailProductPage(value)
     window.open('./DetailProduct.html?value=' + encodeURIComponent(value), '_self');
 }
 // Functionality 
+function formatNumber(number) {
+    return new Intl.NumberFormat('de-DE', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    }).format(number);
+}
 function addProduct(productId)
 {
     let product = shoppingCart.products.find(p => p.productId == productId);
