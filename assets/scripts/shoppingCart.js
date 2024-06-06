@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', async () => 
     {        
-        let sales =  await fetchSales();
-        console.log(sales);
+        let sales =  await fetchSales();        
     })
 //Retrieving Data
 function getCookie(name) {
@@ -120,11 +119,10 @@ function createCards(productsAndQuantities)
         PRODUCT_LIST.append(newCard);
     });
 }
-async function renderCards() //WTF is this?
+async function renderCards() 
 {
     let storedUserShoppingCart = getCookie('shoppingCart');
-    let parsedStoredUserShoppingCart = JSON.parse(storedUserShoppingCart); 
-    console.log(parsedStoredUserShoppingCart);
+    let parsedStoredUserShoppingCart = JSON.parse(storedUserShoppingCart);     
     let productsAndQuantities = await FetchProducts(parsedStoredUserShoppingCart);
     createCards(productsAndQuantities);
 }
@@ -187,15 +185,12 @@ async function BuyShoppingCart()
     let productsAndQuantities = await FetchProducts(parsedStoredUserShoppingCart);
     subTotal = ComputeSubTotal(productsAndQuantities);
     totalDiscount = ComputeTotalDiscount(productsAndQuantities);
-    totalPayed = ComputeTotal(subTotal, totalDiscount, 1.21);
-    console.log(parsedStoredUserShoppingCart);
+    totalPayed = ComputeTotal(subTotal, totalDiscount, 1.21);    
     realData = 
     {
         products,
         totalPayed
-    };
-    console.log(realData);
-    console.log(await InsertSale(realData));
+    };    
 }
 async function InsertSale(data)
 {
@@ -208,8 +203,7 @@ async function InsertSale(data)
             "Content-Type": "application/json"
         },
         body: JSON.stringify(data)        
-    })
-    console.log(JSON.stringify(data));
+    })    
     return response.json();
 }
 async function ComputeAll(productsAndQuantities)

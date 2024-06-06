@@ -16,6 +16,7 @@ async function fetchSales(from = null, to = null)
         console.error('Error fetching data:', error);
     }    
 }
+
 //Rendering
 function renderSaleCards(sales)
 {
@@ -44,7 +45,7 @@ function renderSaleCards(sales)
         saleDateContainer.classList.add('sale-date-container');
         saleDateContainer.innerHTML = "<h4>Fecha:</h4>";
         let date = document.createElement('h4');
-        date.innerHTML = sale.date;
+        date.innerHTML = sale.date.slice(0, 10);
         saleDateContainer.appendChild(date);
         saleContainer.appendChild(saleDateContainer);  
         
@@ -52,6 +53,9 @@ function renderSaleCards(sales)
         detailButtonContainer.classList.add('details-button-container');
         let detailButton = document.createElement('button');
         detailButton.innerHTML = "<h4>Ver mas</h4>";
+        detailButton.addEventListener('click', () => {
+            searchSaleDetail(sale.id)
+        })
         detailButtonContainer.appendChild(detailButton);
         saleContainer.appendChild(detailButtonContainer);
         
@@ -60,6 +64,10 @@ function renderSaleCards(sales)
 }
 
 //Functionality
+async function searchSaleDetail(id)
+{    
+    window.open('./saleDetail.html?id=' + encodeURIComponent(id), '_self');
+}
 async function searchSales()
 {
     toggleSearchBox();

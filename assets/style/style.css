@@ -1,7 +1,6 @@
 :root
 {
     --c-blue1: rgba(0, 23, 153, 1);
-    /* --c-blue1: #222684; */
     --c-yellow1: rgba(255, 181, 52, 1);
     --c-yellow2: rgb(222, 158, 47);
     --c-white1: rgba(255, 254, 254, 1);
@@ -88,6 +87,24 @@ header
                     {
                         color: var(--c-neutral);                        
                     }
+                }   
+                & .amount-icon
+                {
+                    display: none;
+                    justify-content: center;
+                    align-items: center;
+                    height: 20px;
+                    width: 20px;
+                    background-color: red;
+                    border-radius: 50px;
+                    color: white;                    
+                    position: absolute;
+                    top: 15px;
+                    right: 45px;
+                }
+                & .active
+                {
+                    display: flex;
                 }                
             }
         }
@@ -188,7 +205,6 @@ main
             display: flex;
             flex-direction: column;
             border-radius: 10px;
-            /* background-color: rgb(192, 192, 192); */
             height: 65vh;
             width: 18vw;
             border: 0.25px solid var(--c-cian1);
@@ -218,7 +234,7 @@ main
                 border-bottom-left-radius: 10px;
                 border-bottom-right-radius: 10px;
                 & .name-container
-                {
+                {                    
                     width: 14vw;
                     height: 5vh;
                     padding: 20px;
@@ -228,7 +244,6 @@ main
                 {
                     display: flex;
                     justify-content: space-between;
-                    /* justify-content: space-around; */
                     & .price-container
                     {
                         padding-left: 20px;
@@ -236,7 +251,24 @@ main
                         & p 
                         {                
                             font-size: 1.3rem;
-                        }            
+                        }   
+                        & .price-without-discount
+                        {
+                            color: rgba(0, 0, 0, .55);
+                            font-size: 0.9rem;
+                            text-decoration: line-through;
+                        }
+                        & .price-with-discount-container
+                        {
+                            display: flex;
+                            align-items: center;
+                            & .percentage-off
+                            {
+                                margin-left: 10px;
+                                color: rgb(6, 184, 6);
+                                font-size: 0.8rem;
+                            }
+                        }
                     }
                     & .shopping-cart-icon-container
                     {
@@ -278,7 +310,6 @@ main
             }
             &:hover{
                 box-shadow: 0px 2px 5px var(--c-cian1);
-                /* transform: scale(1.15); */
             }
         }
     }

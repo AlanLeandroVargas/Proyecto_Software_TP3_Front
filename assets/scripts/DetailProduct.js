@@ -9,8 +9,7 @@ document.addEventListener('DOMContentLoaded', () =>
     {        
         let storedUserShoppingCart = getCookie('shoppingCart');
         let parsedStoredUserShoppingCart = JSON.parse(storedUserShoppingCart); 
-        shoppingCart = parsedStoredUserShoppingCart;
-        console.log(shoppingCart);
+        shoppingCart = parsedStoredUserShoppingCart;       
     })
 
 function getCookie(name) {
@@ -37,7 +36,7 @@ async function fetchProduct()
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
         const data = await response.json(); 
-        console.log(data);
+        
         return data;       
     }
     catch
@@ -101,10 +100,7 @@ async function createProductDetails()
     cartBtn.innerText = "Agregar al carrito"
     cartBtn.addEventListener('click', () => {
         addProduct(product.id); 
-    })
-    // let cartBtnText = document.createElement('h3');
-    // // cartBtnText.innerHTML = "Agregar al carrito";
-    // // cartBtn.appendChild(cartBtnText);
+    })    
     cartBtnContainer.appendChild(cartBtn);
     priceSectionBottom.appendChild(cartBtnContainer);
     priceSectionContainer.appendChild(priceSectionBottom);
@@ -137,6 +133,5 @@ function addProduct(productId)
 }
 
 const ITEM_SECTION = document.querySelector('.product-container');
-console.log(ITEM_SECTION);
 createProductDetails();
 

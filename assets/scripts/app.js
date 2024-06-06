@@ -7,9 +7,16 @@ let shoppingCartInfoString;
 document.addEventListener('DOMContentLoaded', () => 
     {        
         let storedUserShoppingCart = getCookie('shoppingCart');
-        let parsedStoredUserShoppingCart = JSON.parse(storedUserShoppingCart); 
-        shoppingCart = parsedStoredUserShoppingCart;
-        console.log(shoppingCart);
+        if(storedUserShoppingCart != undefined)
+            {
+                let parsedStoredUserShoppingCart = JSON.parse(storedUserShoppingCart); 
+                shoppingCart = parsedStoredUserShoppingCart;
+                renderItemsAmount(shoppingCart.products.length);
+            }
+        else
+        {
+            
+        }
     })
 
 function getCookie(name) {
@@ -27,10 +34,7 @@ async function retrieveProducts(search = '%00', category = '%00')
         if (!response.ok) {            
             throw new Error(`HTTP error! Status: ${response.status}`);
         }                
-        const data = await response.json(); // Wait for the response to be parsed as JSON    
-        console.log(response);
-        console.log('Payload'); 
-        console.log(data);   
+        const data = await response.json();             
         return data;
     }
     catch
@@ -39,9 +43,16 @@ async function retrieveProducts(search = '%00', category = '%00')
     }    
 }
 //Render
+function renderItemsAmount(productAmount)
+{
+    let amountIcon = document.querySelector('.amount-icon');
+    amountIcon.style.display = 'flex';
+    amountIcon.innerHTML = `<p>${productAmount}</p>`;
+}
 function createCards(products)
 {
     products.forEach(product => {
+        console.log(product);
         let newCard = document.createElement('article');
         newCard.classList.add("item-card");
         newCard.addEventListener('click', () => {openDetailProductPage(product.id)});
@@ -58,7 +69,13 @@ function createCards(products)
         let productNameContainer = document.createElement('section');
         productNameContainer.classList.add("name-container");
         let productName = document.createElement('h5');
-        productName.innerHTML = product.name;
+        let productNameString = product.name;        
+        if(productNameString.length > 42)
+            {                
+                productNameString = productNameString.slice(0, 42);
+                productNameString = productNameString + '...';                
+            }
+        productName.innerHTML = productNameString;
         productNameContainer.appendChild(productName);
         contentResultContainer.appendChild(productNameContainer);
 
@@ -67,24 +84,32 @@ function createCards(products)
         
         let priceContainer = document.createElement('section');
         priceContainer.classList.add("price-container");
-        let price = document.createElement('p');
-        price.innerHTML = "$" + formatNumber(product.price);
-        priceContainer.appendChild(price);
+        let priceWithoutDiscount = document.createElement('p');
+        
+        priceWithoutDiscount.innerHTML = "$" + formatNumber(product.price);
+        if(product.discount > 0)
+            {
+                priceWithoutDiscount.classList.add('price-without-discount');
+                let priceWithDiscountContainer = document.createElement('section');
+                priceWithDiscountContainer.classList.add('price-with-discount-container');
+                let priceWithDiscount = document.createElement('p');                
+                let actualPrice = product.price - (product.price * (product.discount / 100));
+                priceWithDiscount.innerHTML = "$" + formatNumber(actualPrice);
+                let percentageOff = document.createElement('p');
+                percentageOff.classList.add('percentage-off');
+                percentageOff.innerHTML = `${product.discount}% OFF`;
+                priceWithDiscountContainer.appendChild(priceWithDiscount);
+                priceWithDiscountContainer.appendChild(percentageOff);                
+                priceContainer.appendChild(priceWithoutDiscount);
+                priceContainer.appendChild(priceWithDiscountContainer);
+
+            }
+        else
+        {
+            priceContainer.appendChild(priceWithoutDiscount);
+        }
+        
         priceAndCartContainer.appendChild(priceContainer);
-
-        // let shoppingCartButton = document.createElement('button');
-        // shoppingCartButton.classList.add("shopping-cart-icon-container");
-        // shoppingCartButton.addEventListener('click', (e) => {
-        //     addProduct(product.id); 
-        //     e.stopPropagation();                       
-        // })
-        // let icon = document.createElement('i');
-        // icon.classList.add("fa-solid");
-        // icon.classList.add("fa-cart-shopping");
-        // icon.classList.add("fa-xl");        
-        // shoppingCartButton.appendChild(icon);
-        // priceAndCartContainer.appendChild(shoppingCartButton);
-
         contentResultContainer.appendChild(priceAndCartContainer);
 
         newCard.appendChild(contentResultContainer);
@@ -177,17 +202,17 @@ function filterByCategory(category, number)
 const searchBar = document.querySelector('#searchBar');
 searchBar.addEventListener('input', (e) =>
     {        
+        let activeCategory = document.querySelector('.active');        
+        if(activeCategory != null){activeCategory.classList.toggle('active')};  
         disposeCards();
         createItemSection(e.target.value)
     });
 
 const ITEM_SECTION = document.querySelector('.item-section');
-console.log(ITEM_SECTION);
 let apiData;
 let currentOffset = 0; 
 createItemSection();
 
-//document.cookie = `shoppingCart=${encodeURIComponent(shoppingCartInfoString)}; path=/; max-age=3600`;
 
 
 
