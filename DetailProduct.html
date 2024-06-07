@@ -13,24 +13,40 @@
 </head>
 <body>
     <header>
-        <nav class="NavBar">
-            <section class="LogoContainer">
-                <a href="index.html">Logo Retail</a>
+        <nav class="nav-bar">
+            <section class="logo-container">
+                <a href="index.html"><img src="./assets/img/logo.png" alt=""></a>
             </section>
-            <section class="SearchBarContainer">
-                <input class="SearchBar" type="text" name="" id="" placeholder="Busque un producto">
+            <section class="search-bar-container">
+                <input class="search-bar" type="text" name="searchBar" id="searchBar" placeholder="Busque un producto">
             </section>
-            <section class="ShoppingCartContainer">
-                <section class="ShoppingCartIconContainer">
+            <section class="sales-container">
+                <section class="sale-link-container">
+                    <a href="./sales.html">Ver ventas</a>
+                </section>
+            </section>
+            <section class="shopping-cart-container">
+                <section class="shopping-cart-icon-container">
                     <a href="./ShoppingCartPage.html">
                         <i class="fa-solid fa-cart-shopping fa-xl"></i> 
-                    </a>                    
+                    </a>
+                    <section class="amount-icon"></section>                    
                 </section>                
             </section>            
         </nav>
     </header>
     <main>
         <section class="product-container">            
+        </section>
+        <section class="modal">
+            <section class="modal-content">                
+                <p><b>Agregaste a tu carrito</b></p>
+                <p class="product-name">Nombre del producto</p>
+                <p>1 Unidad</p>
+                <section class="shopping-cart-link-container">
+                    <a href="./ShoppingCartPage.html">Ir al Carrito</a>
+                </section>
+            </section>
         </section>                
     </main>  
     <script src="./assets/scripts/DetailProduct.js"></script>  

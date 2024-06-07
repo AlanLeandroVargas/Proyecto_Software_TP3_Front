@@ -1,4 +1,23 @@
+document.addEventListener('DOMContentLoaded', () => 
+    {        
+        let storedUserShoppingCart = getCookie('shoppingCart');
+        if(storedUserShoppingCart != undefined)
+            {
+                let parsedStoredUserShoppingCart = JSON.parse(storedUserShoppingCart); 
+                shoppingCart = parsedStoredUserShoppingCart;
+                renderItemsAmount(shoppingCart.products.length);
+            }
+        else
+        {
+            
+        }
+    })
 //Retrieving data
+function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return decodeURIComponent(parts.pop().split(';').shift());
+}
 async function fetchSales(from = null, to = null)
 {
     try
@@ -18,6 +37,15 @@ async function fetchSales(from = null, to = null)
 }
 
 //Rendering
+function renderItemsAmount(productAmount)
+{
+    if(productAmount > 0)
+        {
+            let amountIcon = document.querySelector('.amount-icon');
+            amountIcon.style.display = 'flex';
+            amountIcon.innerHTML = `<p>${productAmount}</p>`;
+        }    
+}
 function renderSaleCards(sales)
 {
     sales.forEach(sale => {        
@@ -29,13 +57,13 @@ function renderSaleCards(sales)
         saleTotalContainer.classList.add('sale-total-container');
         saleTotalContainer.innerHTML = "<h4>Total Pagado:</h4>";
         let totalPayed = document.createElement('h4');
-        totalPayed.innerHTML = sale.totalPay;
+        totalPayed.innerHTML = "$ " + formatNumber(sale.totalPay);
         saleTotalContainer.appendChild(totalPayed);
         saleContainer.appendChild(saleTotalContainer);
 
         let saleProductQuantityContainer = document.createElement('section');
         saleProductQuantityContainer.classList.add('sale-product-quantity-container')
-        saleProductQuantityContainer.innerHTML = "<h4>Cantidad total:</h4>";
+        saleProductQuantityContainer.innerHTML = "<h4>Cantidad total de productos:</h4>";
         let totalQuantity = document.createElement('h4');
         totalQuantity.innerHTML = sale.totalQuantity;
         saleProductQuantityContainer.appendChild(totalQuantity);
@@ -64,6 +92,12 @@ function renderSaleCards(sales)
 }
 
 //Functionality
+function formatNumber(number) {
+    return new Intl.NumberFormat('de-DE', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    }).format(number);
+}
 async function searchSaleDetail(id)
 {    
     window.open('./saleDetail.html?id=' + encodeURIComponent(id), '_self');

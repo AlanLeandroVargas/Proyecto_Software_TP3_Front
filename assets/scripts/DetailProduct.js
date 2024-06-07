@@ -2,14 +2,21 @@ let shoppingCart =
         {
             products: []
         };
-let shoppingCartInfoString; 
 
 //Retrieving Data
 document.addEventListener('DOMContentLoaded', () => 
     {        
         let storedUserShoppingCart = getCookie('shoppingCart');
-        let parsedStoredUserShoppingCart = JSON.parse(storedUserShoppingCart); 
-        shoppingCart = parsedStoredUserShoppingCart;       
+        if(storedUserShoppingCart != undefined)
+            {
+                let parsedStoredUserShoppingCart = JSON.parse(storedUserShoppingCart); 
+                shoppingCart = parsedStoredUserShoppingCart;
+                renderItemsAmount(shoppingCart.products.length);
+            }
+        else
+        {
+            
+        }      
     })
 
 function getCookie(name) {
@@ -45,6 +52,29 @@ async function fetchProduct()
     }
 }
 //Render
+function renderModal()
+{
+    const MODAL = document.querySelector('.modal');
+    const PRICE_SECTION_HEADER = document.querySelector('.price-section-header');
+    const PRODUCT_NAME = document.querySelector('.product-name');
+    let productName = PRICE_SECTION_HEADER.firstChild.innerHTML;
+    PRODUCT_NAME.innerHTML = productName;
+    MODAL.style.display = 'block';
+    window.onclick = function(event) {
+    if (event.target == MODAL) {
+        MODAL.style.display = "none";
+        }
+    }
+}
+function renderItemsAmount(productAmount)
+{
+    if(productAmount != 0)
+        {
+            let amountIcon = document.querySelector('.amount-icon');
+            amountIcon.style.display = 'flex';
+            amountIcon.innerHTML = `<p>${productAmount}</p>`;
+        }    
+}
 async function createProductDetails()
 {
     let product = await fetchProduct();
@@ -85,9 +115,30 @@ async function createProductDetails()
     //Price Content
     let priceSectionContent = document.createElement('section');
     priceSectionContent.classList.add('price-section-content');
-    let productPrice = document.createElement('h3');
-    productPrice.innerHTML = "$" + formatNumber(product.price);
-    priceSectionContent.appendChild(productPrice);
+    let productPriceWithoutDiscount = document.createElement('p');
+    productPriceWithoutDiscount.innerHTML = "$" + formatNumber(product.price);
+    if(product.discount > 0)
+        {
+            productPriceWithoutDiscount.classList.add('price-without-discount');
+            let priceWithDiscountContainer = document.createElement('section');
+            priceWithDiscountContainer.classList.add('price-with-discount-container');
+            let priceWithDiscount = document.createElement('p');                
+            let actualPrice = product.price - (product.price * (product.discount / 100));
+            priceWithDiscount.innerHTML = "$" + formatNumber(actualPrice);
+            let percentageOff = document.createElement('p');
+            percentageOff.classList.add('percentage-off');
+            percentageOff.innerHTML = `${product.discount}% OFF`;
+            priceWithDiscountContainer.appendChild(priceWithDiscount);
+            priceWithDiscountContainer.appendChild(percentageOff);                
+            priceSectionContent.appendChild(productPriceWithoutDiscount);
+            priceSectionContent.appendChild(priceWithDiscountContainer);
+
+        }
+    else
+    {
+        priceSectionContent.appendChild(productPriceWithoutDiscount);
+    }
+    
     priceSectionContainer.appendChild(priceSectionContent);
 
     //Price Bottom
@@ -128,8 +179,10 @@ function addProduct(productId)
             quantity: 1
         });
     }    
-    shoppingCartInfoString = JSON.stringify(shoppingCart); 
+    let shoppingCartInfoString = JSON.stringify(shoppingCart); 
     document.cookie = `shoppingCart=${encodeURIComponent(shoppingCartInfoString)}; path=/; max-age=3600`;
+    renderItemsAmount(shoppingCart.products.length);
+    renderModal();
 }
 
 const ITEM_SECTION = document.querySelector('.product-container');

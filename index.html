@@ -15,14 +15,14 @@
     <header>
         <nav class="nav-bar">
             <section class="logo-container">
-                <a href="index.html">Logo Retail</a>
+                <a href="index.html"><img src="./assets/img/logo.png" alt=""></a>
             </section>
             <section class="search-bar-container">
                 <input class="search-bar" type="text" name="searchBar" id="searchBar" placeholder="Busque un producto">
             </section>
             <section class="sales-container">
-                <section class="sale-icon-container">
-                    <a href="./sales.html">Ir a las sales</a>
+                <section class="sale-link-container">
+                    <a href="./sales.html">Ver ventas</a>
                 </section>
             </section>
             <section class="shopping-cart-container">
@@ -43,7 +43,7 @@
                 </section>
                 <section class="filter-buttons">
                     <section class="filter-button-container">
-                        <button onclick="filterByCategory('Electrodomesticos', 1)" class="filter-button">
+                        <button onclick="filterByCategory('Electrodomesticos', 1)" class="filter-button" id="electrodomesticos" >
                             <section class="circle-button filter-1">
                             </section>
                             <section class="category-name-container">
@@ -54,7 +54,7 @@
                 </section>
                 <section class="filter-buttons">
                     <section class="filter-button-container">
-                        <button onclick="filterByCategory('Tecnologia y Electronica', 2)" class="filter-button">
+                        <button onclick="filterByCategory('Tecnologia y Electronica', 2)" class="filter-button" id="tecnologia y electronica">
                             <section class="circle-button filter-2">
                             </section>
                             <section class="category-name-container">
@@ -65,7 +65,7 @@
                 </section>
                 <section class="filter-buttons">
                     <section class="filter-button-container">
-                        <button onclick="filterByCategory('Moda y Accesorios', 3)" class="filter-button">
+                        <button onclick="filterByCategory('Moda y Accesorios', 3)" class="filter-button" id="moda y accesorios">
                             <section class="circle-button filter-3">
                             </section>
                             <section class="category-name-container">
@@ -76,7 +76,7 @@
                 </section>
                 <section class="filter-buttons">
                     <section class="filter-button-container">
-                        <button onclick="filterByCategory('Hogar y Decoracion', 4)" class="filter-button">
+                        <button onclick="filterByCategory('Hogar y Decoracion', 4)" class="filter-button" id="hogar y decoracion">
                             <section class="circle-button filter-4">
                             </section>
                             <section class="category-name-container">
@@ -87,7 +87,7 @@
                 </section>
                 <section class="filter-buttons">
                     <section class="filter-button-container">
-                        <button onclick="filterByCategory('Salud y Belleza', 5)" class="filter-button">
+                        <button onclick="filterByCategory('Salud y Belleza', 5)" class="filter-button" id="salud y belleza">
                             <section class="circle-button filter-5">
                             </section>
                             <section class="category-name-container">
@@ -98,7 +98,7 @@
                 </section>
                 <section class="filter-buttons">
                     <section class="filter-button-container">
-                        <button onclick="filterByCategory('Deportes y Ocio', 6)" class="filter-button">
+                        <button onclick="filterByCategory('Deportes y Ocio', 6)" class="filter-button" id="deportes y ocio">
                             <section class="circle-button filter-6">
                             </section>
                             <section class="category-name-container">
@@ -109,7 +109,7 @@
                 </section>
                 <section class="filter-buttons">
                     <section class="filter-button-container">
-                        <button onclick="filterByCategory('Juguetes y Juegos', 7)" class="filter-button">
+                        <button onclick="filterByCategory('Juguetes y Juegos', 7)" class="filter-button" id="juguetes y juegos">
                             <section class="circle-button filter-7">
                             </section>
                             <section class="category-name-container">
@@ -120,7 +120,7 @@
                 </section>
                 <section class="filter-buttons">
                     <section class="filter-button-container">
-                        <button onclick="filterByCategory('Alimentos y Bebidas', 8)" class="filter-button">
+                        <button onclick="filterByCategory('Alimentos y Bebidas', 8)" class="filter-button" id="alimentos y bebidas">
                             <section class="circle-button filter-8">
                             </section>
                             <section class="category-name-container">
@@ -131,7 +131,7 @@
                 </section>
                 <section class="filter-buttons">
                     <section class="filter-button-container">
-                        <button onclick="filterByCategory('Libros y Material Educativo', 9)" class="filter-button">
+                        <button onclick="filterByCategory('Libros y Material Educativo', 9)" class="filter-button" id="libros y material educativo">
                             <section class="circle-button filter-9">
                             </section>
                             <section class="category-name-container">
@@ -142,7 +142,7 @@
                 </section>
                 <section class="filter-buttons">
                     <section class="filter-button-container">
-                        <button onclick="filterByCategory('Jardineria y Bricolaje', 10)" class="filter-button">
+                        <button onclick="filterByCategory('Jardineria y Bricolaje', 10)" class="filter-button" id="jardineria y bricolaje">
                             <section class="circle-button filter-10">
                             </section>
                             <section class="category-name-container">
@@ -152,8 +152,11 @@
                     </section>
                 </section>  
             </section>                        
-        </section>
-        <section class="item-section">
+        </section>        
+        <section class="item-section-container">            
+            <section class="item-section-content">
+
+            </section>            
         </section>
     </main>    
     <footer class="Footer">        

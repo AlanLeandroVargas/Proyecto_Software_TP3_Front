@@ -12,11 +12,7 @@ document.addEventListener('DOMContentLoaded', () =>
                 let parsedStoredUserShoppingCart = JSON.parse(storedUserShoppingCart); 
                 shoppingCart = parsedStoredUserShoppingCart;
                 renderItemsAmount(shoppingCart.products.length);
-            }
-        else
-        {
-            
-        }
+            }        
     })
 
 function getCookie(name) {
@@ -45,14 +41,16 @@ async function retrieveProducts(search = '%00', category = '%00')
 //Render
 function renderItemsAmount(productAmount)
 {
-    let amountIcon = document.querySelector('.amount-icon');
-    amountIcon.style.display = 'flex';
-    amountIcon.innerHTML = `<p>${productAmount}</p>`;
+    if(productAmount > 0)
+        {
+            let amountIcon = document.querySelector('.amount-icon');
+            amountIcon.style.display = 'flex';
+            amountIcon.innerHTML = `<p>${productAmount}</p>`;
+        }    
 }
 function createCards(products)
-{
+{    
     products.forEach(product => {
-        console.log(product);
         let newCard = document.createElement('article');
         newCard.classList.add("item-card");
         newCard.addEventListener('click', () => {openDetailProductPage(product.id)});
@@ -114,18 +112,18 @@ function createCards(products)
 
         newCard.appendChild(contentResultContainer);
         ITEM_SECTION.append(newCard);
-    });
-    let pageNextToggle = document.createElement('button');
-    pageNextToggle.addEventListener('click', nextPage);
-    pageNextToggle.classList.add('page-toggle');
-    pageNextToggle.innerHTML = "Next";
-    ITEM_SECTION.appendChild(pageNextToggle);
+    });    
 
     let pagePreviousToggle = document.createElement('button');
     pagePreviousToggle.addEventListener('click', previousPage);
     pagePreviousToggle.classList.add('page-toggle');
-    pagePreviousToggle.innerHTML = "Previous";
-    ITEM_SECTION.appendChild(pagePreviousToggle);
+    pagePreviousToggle.innerHTML = "Anterior";
+    ITEM_SECTION.appendChild(pagePreviousToggle);    
+    let pageNextToggle = document.createElement('button');
+    pageNextToggle.addEventListener('click', nextPage);
+    pageNextToggle.classList.add('page-toggle');
+    pageNextToggle.innerHTML = "Siguiente";
+    ITEM_SECTION.appendChild(pageNextToggle);    
 }
 //Rendering - Paginado
 function nextPage()
@@ -194,9 +192,21 @@ function toggleCategory(number)
 //Category Filter
 function filterByCategory(category, number)
 {    
-    toggleCategory(number);
-    disposeCards();
-    createItemSection('%00', category);
+    let categoryFilter = document.getElementById(`${category.toLowerCase()}`); 
+    if(categoryFilter.classList.contains('active'))
+        {
+            categoryFilter.classList.toggle('active');
+            disposeCards();
+            createItemSection();
+        }
+    else
+    {
+        categoryFilter.classList.toggle('active');
+        disposeCards();
+        createItemSection('%00', category);
+    }
+    console.log(categoryFilter);
+    toggleCategory(number);    
 }
 //Search
 const searchBar = document.querySelector('#searchBar');
@@ -208,7 +218,7 @@ searchBar.addEventListener('input', (e) =>
         createItemSection(e.target.value)
     });
 
-const ITEM_SECTION = document.querySelector('.item-section');
+const ITEM_SECTION = document.querySelector('.item-section-content');
 let apiData;
 let currentOffset = 0; 
 createItemSection();
